@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    command: --port=3306 --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: Undav
+      MYSQL_USER: Undav
+      MYSQL_PASSWORD: 123456788
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: mysql+pymysql://Undav:123456788@db/Undav
+      DB_HOST: db
+      DB_PORT: 3306
+    volumes:
+      - ./backend:/app
+      - ./backend/Inscriptos_a_materias_SIU.xlsx:/app/Inscriptos_a_materias_SIU.xlsx:ro
+      - ./backend/static/qr:/app/static/qr
+    command: ["sh", "-c", "/app/esperar-mysql.sh db 3306 && flask run --host=0.0.0.0 --port=5000"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: 'true'
+    command: ["npm", "start"]
+
+
+volumes:
+  mysql_data:
