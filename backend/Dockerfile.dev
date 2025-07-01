@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copiar requirements primero para cacheo
+COPY requirements.txt /app/requirements.txt
+
+# Herramientas útiles para networking
+RUN apt-get update && apt-get install -y netcat-openbsd bash && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Script de espera
+COPY esperar-mysql.sh /app/esperar-mysql.sh
+RUN chmod +x /app/esperar-mysql.sh
+
+# Código de la app
+COPY . /app
+
+EXPOSE 5000
+ENV FLASK_APP=run.py
+ENV FLASK_ENV=development
+
+CMD ["bash", "/app/esperar-mysql.sh", "db", "3306", "python", "run.py"]

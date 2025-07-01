@@ -186,7 +186,7 @@ def crear_sesion():
 
     # Token
     token_qr = secrets.token_urlsafe(16)
-    token_expiracion = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")) + timedelta(seconds=45)
+    token_expiracion = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")) + timedelta(minutes=3)
 
     nueva_sesion.token_qr = token_qr
     nueva_sesion.token_expiracion = token_expiracion
@@ -405,7 +405,7 @@ def regenerar_qr(id_sesion):
 
     # Generar nuevo token y expiraci贸n
     token_qr = secrets.token_urlsafe(16)
-    token_expiracion = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")) + timedelta(seconds=45)
+    token_expiracion = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")) + timedelta(minutes=3)
 
     sesion.token_qr = token_qr
     sesion.token_expiracion = token_expiracion

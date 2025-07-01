@@ -52,11 +52,11 @@ def create_app():
                 cursos_vacios = not Curso.query.first()
 
                 if materias_vacias or cursos_vacios:
-                    print("📦 Base de datos incompleta. Importando datos desde Excel...")
+                    print("Base de datos incompleta. Importando datos desde Excel...")
                     importar_datos_desde_df(db)
-                    print("✅ Importación finalizada.")
+                    print("Importación finalizada.")
                 else:
-                    print("✅ Datos ya cargados, se omite la importación.")
+                    print("Datos ya cargados, se omite la importación.")
                     print("Importación finalizada.")
                 break
             except sqlalchemy.exc.OperationalError as e:

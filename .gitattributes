@@ -1,0 +1,8 @@
+# Forzar fin de línea estilo Unix para archivos clave
+*.sh text eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf

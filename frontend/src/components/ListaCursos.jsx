@@ -32,7 +32,7 @@ function CursosView() {
         ← Volver
       </button>
 
-      <h1 className="text-2xl font-bold mb-6">Listado de Materias y Alumnos</h1>
+      <h1 className="text-2xl font-bold mb-6">Listado de materias y estudiantes</h1>
 
       {materias.map((materia, indice) => (
         <div
